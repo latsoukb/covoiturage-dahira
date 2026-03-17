@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covoiturage Dahira - Système de Réservation</title>
+    <title>Covoiturage Dahira - Temps Réel</title>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
@@ -16,79 +16,16 @@
 
         :root {
             --primary: #1a472a;
-            --primary-light: #2d7a4a;
             --accent: #f39c12;
-            --accent-light: #f5b041;
-            --danger: #e74c3c;
             --success: #27ae60;
-            --bg-light: #f8f9fa;
-            --bg-white: #ffffff;
-            --text-dark: #2c3e50;
-            --text-muted: #7f8c8d;
-            --border: #ecf0f1;
+            --danger: #e74c3c;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a472a 0%, #2d7a4a 100%);
-            color: var(--text-dark);
             min-height: 100vh;
             padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            animation: slideDown 0.6s ease-out;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.95;
-        }
-
-        .user-info {
-            background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            padding: 12px 20px;
-            color: white;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .user-info strong {
-            font-size: 1.1em;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.4);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
         }
 
         .login-screen {
@@ -100,7 +37,6 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(135deg, #1a472a 0%, #2d7a4a 100%);
             z-index: 2000;
         }
 
@@ -115,14 +51,13 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             max-width: 450px;
             width: 90%;
-            animation: slideUp 0.6s ease-out;
         }
 
         .login-card h1 {
             text-align: center;
             color: var(--primary);
             margin-bottom: 30px;
-            font-size: 2em;
+            font-size: 2.5em;
         }
 
         .login-tabs {
@@ -134,12 +69,11 @@
         .login-tab {
             flex: 1;
             padding: 12px;
-            border: 2px solid var(--border);
+            border: 2px solid #ddd;
             background: transparent;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
         }
 
         .login-tab.active {
@@ -164,22 +98,19 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--text-dark);
         }
 
         .form-group input {
             width: 100%;
             padding: 12px;
-            border: 2px solid var(--border);
+            border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 1em;
-            transition: all 0.3s ease;
         }
 
         .form-group input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 71, 42, 0.1);
         }
 
         .btn-login {
@@ -189,37 +120,58 @@
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
         .btn-login:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
+            background: #2d7a4a;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .app-screen {
+            display: none;
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .app-screen.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.3);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
         }
 
         .tabs {
@@ -237,23 +189,12 @@
             color: white;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1em;
             font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .tab-btn:hover {
-            background: rgba(255,255,255,0.25);
-            border-color: var(--accent);
-            transform: translateY(-2px);
         }
 
         .tab-btn.active {
             background: var(--accent);
             border-color: var(--accent);
-            color: white;
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
         }
 
         .content {
@@ -262,21 +203,19 @@
 
         .content.active {
             display: block;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .form-section {
-            background: var(--bg-white);
+            background: white;
             border-radius: 12px;
             padding: 30px;
             margin-bottom: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            animation: slideUp 0.5s ease-out;
+        }
+
+        .form-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
         }
 
         .form-row {
@@ -295,10 +234,8 @@
             padding: 12px 28px;
             border: none;
             border-radius: 8px;
-            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
         .btn-primary {
@@ -307,20 +244,7 @@
         }
 
         .btn-primary:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(26, 71, 42, 0.3);
-        }
-
-        .btn-secondary {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: var(--accent-light);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.3);
+            background: #2d7a4a;
         }
 
         .btn-danger {
@@ -330,423 +254,187 @@
             font-size: 0.9em;
         }
 
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-
-        .btn-success {
-            background: var(--success);
+        .btn-secondary {
+            background: var(--accent);
             color: white;
-        }
-
-        .btn-success:hover {
-            background: #229954;
         }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
 
         .card {
-            background: var(--bg-white);
+            background: white;
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
             border-left: 4px solid var(--primary);
-            animation: slideUp 0.5s ease-out;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-        }
-
-        .card-title {
-            font-size: 1.3em;
-            font-weight: 700;
+        .card h3 {
             color: var(--primary);
-            margin-bottom: 12px;
-        }
-
-        .card-subtitle {
-            font-size: 0.9em;
-            color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .card-info {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 0.95em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .card-info strong {
-            color: var(--text-dark);
-        }
-
-        .card-info .label {
-            color: var(--text-muted);
-            font-size: 0.85em;
-        }
-
-        .badge {
             display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        .badge-available {
-            background: rgba(39, 174, 96, 0.1);
-            color: var(--success);
-        }
-
-        .badge-full {
-            background: rgba(231, 76, 60, 0.1);
-            color: var(--danger);
-        }
-
-        .badge-confirmed {
-            background: rgba(39, 174, 96, 0.1);
-            color: var(--success);
-        }
-
-        .seat-count {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1.2em;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 15px;
-            flex-wrap: wrap;
+            min-width: 80px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-        }
-
-        .empty-state-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-
-        .success-message {
-            background: rgba(39, 174, 96, 0.1);
-            border-left: 4px solid var(--success);
-            color: var(--success);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .error-message {
-            background: rgba(231, 76, 60, 0.1);
-            border-left: 4px solid var(--danger);
-            color: var(--danger);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-number {
-            font-size: 2em;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .stat-label {
-            font-size: 0.85em;
-            opacity: 0.9;
-        }
-
-        h2 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .highlight-section {
-            background: linear-gradient(135deg, rgba(39, 174, 96, 0.1) 0%, rgba(243, 156, 18, 0.05) 100%);
-            border: 2px solid var(--success);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .highlight-section h3 {
-            color: var(--success);
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .reservation-card {
-            background: var(--bg-white);
-            border-left: 4px solid var(--accent);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        .modal-content {
-            background: var(--bg-white);
-            border-radius: 12px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .modal-header {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .modal-footer {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-            justify-content: flex-end;
+            padding: 40px;
+            color: #999;
         }
 
         textarea {
-            font-family: inherit;
-            resize: vertical;
             width: 100%;
             padding: 12px;
-            border: 2px solid var(--border);
+            border: 2px solid #ddd;
             border-radius: 8px;
+            font-family: inherit;
         }
 
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 71, 42, 0.1);
-        }
-
-        .loading {
+        .sync-indicator {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--border);
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            background: var(--success);
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- ÉCRAN DE CONNEXION -->
+    <!-- CONNEXION -->
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
             <h1>🚗 Covoiturage</h1>
             
             <div class="login-tabs">
-                <button class="login-tab active" onclick="switchLoginTab('conducteur')">👨‍🚗 Conducteur</button>
-                <button class="login-tab" onclick="switchLoginTab('passager')">👥 Passager</button>
+                <button class="login-tab active" onclick="switchLoginTab('cond')">👨‍🚗 Conducteur</button>
+                <button class="login-tab" onclick="switchLoginTab('pass')">👥 Passager</button>
             </div>
 
-            <!-- CONNEXION CONDUCTEUR -->
-            <form class="login-form active" id="formConducteur" onsubmit="connexionConducteur(event)">
+            <form class="login-form active" id="formCond" onsubmit="connexionConducteur(event)">
                 <div class="form-group">
-                    <label>Votre nom</label>
-                    <input type="text" id="nomCond" required placeholder="Ex: Ahmed Diallo">
+                    <label>Nom:</label>
+                    <input type="text" id="nomCond" required placeholder="Ahmed Diallo">
                 </div>
                 <div class="form-group">
-                    <label>Numéro de téléphone</label>
-                    <input type="tel" id="telCond" required placeholder="Ex: +1-819-123-4567">
+                    <label>Téléphone:</label>
+                    <input type="tel" id="telCond" required placeholder="+1-819-123-4567">
                 </div>
-                <button type="submit" class="btn-login">Continuer comme Conducteur</button>
+                <button type="submit" class="btn-login">Continuer</button>
             </form>
 
-            <!-- CONNEXION PASSAGER -->
-            <form class="login-form" id="formPassager" onsubmit="connexionPassager(event)">
+            <form class="login-form" id="formPass" onsubmit="connexionPassager(event)">
                 <div class="form-group">
-                    <label>Votre nom</label>
-                    <input type="text" id="nomPass" required placeholder="Ex: Fatou Ba">
+                    <label>Nom:</label>
+                    <input type="text" id="nomPass" required placeholder="Fatou Ba">
                 </div>
                 <div class="form-group">
-                    <label>Numéro de téléphone</label>
-                    <input type="tel" id="telPass" required placeholder="Ex: +1-819-456-7890">
+                    <label>Téléphone:</label>
+                    <input type="tel" id="telPass" required placeholder="+1-819-456-7890">
                 </div>
-                <button type="submit" class="btn-login">Continuer comme Passager</button>
+                <button type="submit" class="btn-login">Continuer</button>
             </form>
         </div>
     </div>
 
-    <!-- APPLICATION PRINCIPALE -->
-    <div class="container" id="appContainer" style="display: none;">
-        <div class="header">
-            <h1>🚗 Covoiturage Dahira</h1>
-            <p>Système de réservation en temps réel ⚡</p>
-        </div>
-
-        <div class="user-info">
-            <div>
-                <strong id="userType"></strong><br>
-                <span id="userName"></span>
-            </div>
-            <button class="logout-btn" onclick="deconnexion()">Déconnexion</button>
-        </div>
-
-        <div class="stats" id="stats"></div>
-
-        <!-- PORTAIL CONDUCTEUR -->
-        <div id="portalConducteur" style="display: none;">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchTabCond('ajouterTrajet')">Ajouter un trajet</button>
-                <button class="tab-btn" onclick="switchTabCond('mesTrajets')">Mes trajets</button>
-                <button class="tab-btn" onclick="switchTabCond('mesClients')">Mes clients</button>
+    <!-- APP -->
+    <div class="app-screen" id="appScreen">
+        <div class="container">
+            <div class="header">
+                <h1>🚗 Covoiturage Dahira ⚡</h1>
             </div>
 
-            <!-- AJOUTER TRAJET -->
-            <div id="ajouterTrajet" class="content active">
-                <div class="form-section">
-                    <h2>✏️ Ajouter un nouveau trajet</h2>
-                    <form onsubmit="ajouterTrajet(event)">
-                        <div class="form-group">
-                            <label>Lieu de départ</label>
-                            <input type="text" id="lieuDepart" required placeholder="Ex: Parc Cormier, Sherbrooke">
-                        </div>
+            <div class="user-info">
+                <div>
+                    <strong id="userType"></strong> - <span id="userName"></span>
+                </div>
+                <button class="logout-btn" onclick="deconnexion()">Déconnexion</button>
+            </div>
 
-                        <div class="form-row">
+            <!-- CONDUCTEUR -->
+            <div id="portalCond" style="display: none;">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('addTrajet')">+ Ajouter</button>
+                    <button class="tab-btn" onclick="switchTab('mesTrajets')">Mes trajets</button>
+                    <button class="tab-btn" onclick="switchTab('mesClients')">Mes clients</button>
+                </div>
+
+                <div id="addTrajet" class="content active">
+                    <div class="form-section">
+                        <h2>Ajouter un trajet</h2>
+                        <form onsubmit="ajouterTrajet(event)">
                             <div class="form-group">
-                                <label>Nombre de sièges disponibles</label>
-                                <input type="number" id="sieges" min="1" max="7" required placeholder="Ex: 3">
+                                <label>Lieu de départ:</label>
+                                <input type="text" id="lieu" required placeholder="Parc Cormier">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Nombre de places:</label>
+                                    <input type="number" id="sieges" min="1" max="7" required value="3">
+                                </div>
+                                <div class="form-group">
+                                    <label>Date:</label>
+                                    <input type="date" id="date" required>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Date du départ</label>
-                                <input type="date" id="dateDepart" required>
+                                <label>Heure:</label>
+                                <input type="time" id="heure" required>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label>Notes:</label>
+                                <textarea id="notes" rows="3" placeholder="Musique, arrêts..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label>Heure de départ</label>
-                            <input type="time" id="heureDepart" required>
-                        </div>
+                <div id="mesTrajets" class="content">
+                    <h2>Mes trajets</h2>
+                    <div id="mesTrajetsContainer"></div>
+                </div>
 
-                        <div class="form-group">
-                            <label>Notes supplémentaires (optionnel)</label>
-                            <textarea id="notesCond" rows="3" placeholder="Ex: Musique, arrêts prévus, animaux acceptés"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn-primary">✓ Ajouter ce trajet</button>
-                    </form>
+                <div id="mesClients" class="content">
+                    <h2>Mes clients</h2>
+                    <div id="mesClientsContainer"></div>
                 </div>
             </div>
 
-            <!-- MES TRAJETS -->
-            <div id="mesTrajets" class="content">
-                <h2>📍 Mes trajets enregistrés</h2>
-                <div id="mesTrajetsContainer"></div>
-            </div>
-
-            <!-- MES CLIENTS -->
-            <div id="mesClients" class="content">
-                <h2>👥 Mes clients ayant réservé</h2>
-                <div id="mesClientsContainer"></div>
-            </div>
-        </div>
-
-        <!-- PORTAIL PASSAGER -->
-        <div id="portalPassager" style="display: none;">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchTabPass('trajetsDisponibles')">Trajets disponibles</button>
-                <button class="tab-btn" onclick="switchTabPass('mesReservations')">Mes réservations</button>
-            </div>
-
-            <!-- TRAJETS DISPONIBLES -->
-            <div id="trajetsDisponibles" class="content active">
-                <h2>🔍 Trajets disponibles</h2>
-                <div id="trajetsDisponiblesContainer"></div>
-            </div>
-
-            <!-- MES RÉSERVATIONS -->
-            <div id="mesReservations" class="content">
-                <h2>✅ Mes réservations confirmées</h2>
-                <div id="mesReservationsContainer"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL RÉSERVATION -->
-    <div class="modal-overlay" id="modalReservation">
-        <div class="modal-content">
-            <div class="modal-header">📋 Finaliser ma réservation</div>
-            <form onsubmit="confirmerReservation(event)">
-                <div class="form-group">
-                    <label>Nombre de personnes</label>
-                    <input type="number" id="nbPersonnesModal" min="1" required value="1">
+            <!-- PASSAGER -->
+            <div id="portalPass" style="display: none;">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('trajets')">Trajets dispo</button>
+                    <button class="tab-btn" onclick="switchTab('mesResa')">Mes réservations</button>
                 </div>
-                <div class="form-group">
-                    <label>Notes (optionnel)</label>
-                    <textarea id="notesPassModal" rows="3" placeholder="Ex: Bagages importants, enfants..."></textarea>
+
+                <div id="trajets" class="content active">
+                    <h2>Trajets disponibles</h2>
+                    <div id="trajetsContainer"></div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-danger" onclick="fermerModal()">Annuler</button>
-                    <button type="submit" class="btn-success">✓ Confirmer réservation</button>
+
+                <div id="mesResa" class="content">
+                    <h2>Mes réservations</h2>
+                    <div id="resaContainer"></div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
     <script>
-        // ==================== INITIALISATION FIREBASE ====================
+        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyD_Kvx0MHAk6Mm1-jGSBNtsOdkBKIAxdK4",
             authDomain: "covoiturage-dahirs.firebaseapp.com",
@@ -754,552 +442,240 @@
             projectId: "covoiturage-dahirs",
             storageBucket: "covoiturage-dahirs.firebasestorage.app",
             messagingSenderId: "328038266702",
-            appId: "1:328038266702:web:d1db604f3b3c636610901f",
-            measurementId: "G-0VWNSLMVKP"
+            appId: "1:328038266702:web:d1db604f3b3c636610901f"
         };
 
+        // Initialiser Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         const auth = firebase.auth();
 
-        let utilisateurActuel = null;
-        let modalTrajetId = null;
+        let user = null;
         let trajets = {};
         let reservations = {};
 
-        // ==================== AUTHENTIFICATION ====================
         function switchLoginTab(tab) {
             document.querySelectorAll('.login-tab').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
-            
             document.querySelector(`[onclick="switchLoginTab('${tab}')"]`).classList.add('active');
-            
-            if (tab === 'conducteur') {
-                document.getElementById('formConducteur').classList.add('active');
-            } else {
-                document.getElementById('formPassager').classList.add('active');
-            }
+            document.getElementById(tab === 'cond' ? 'formCond' : 'formPass').classList.add('active');
         }
 
         function connexionConducteur(e) {
             e.preventDefault();
-            
             auth.signInAnonymously().then(result => {
-                utilisateurActuel = {
+                user = {
                     type: 'conducteur',
                     nom: document.getElementById('nomCond').value,
                     tel: document.getElementById('telCond').value,
                     uid: result.user.uid
                 };
-
-                localStorage.setItem('utilisateurActuel', JSON.stringify(utilisateurActuel));
                 afficherApp();
-            }).catch(error => {
-                afficherMessage('error', '❌ Erreur de connexion: ' + error.message);
-            });
+            }).catch(err => alert('Erreur: ' + err.message));
         }
 
         function connexionPassager(e) {
             e.preventDefault();
-            
             auth.signInAnonymously().then(result => {
-                utilisateurActuel = {
+                user = {
                     type: 'passager',
                     nom: document.getElementById('nomPass').value,
                     tel: document.getElementById('telPass').value,
                     uid: result.user.uid
                 };
-
-                localStorage.setItem('utilisateurActuel', JSON.stringify(utilisateurActuel));
                 afficherApp();
-            }).catch(error => {
-                afficherMessage('error', '❌ Erreur de connexion: ' + error.message);
-            });
+            }).catch(err => alert('Erreur: ' + err.message));
         }
 
         function afficherApp() {
             document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('appContainer').style.display = 'block';
+            document.getElementById('appScreen').classList.add('active');
+            document.getElementById('userType').textContent = user.type === 'conducteur' ? '👨‍🚗 CONDUCTEUR' : '👥 PASSAGER';
+            document.getElementById('userName').textContent = user.nom;
 
-            if (utilisateurActuel.type === 'conducteur') {
-                document.getElementById('portalConducteur').style.display = 'block';
-                document.getElementById('portalPassager').style.display = 'none';
-                document.getElementById('userType').textContent = '👨‍🚗 CONDUCTEUR';
-                switchTabCond('ajouterTrajet');
+            if (user.type === 'conducteur') {
+                document.getElementById('portalCond').style.display = 'block';
+                document.getElementById('portalPass').style.display = 'none';
             } else {
-                document.getElementById('portalConducteur').style.display = 'none';
-                document.getElementById('portalPassager').style.display = 'block';
-                document.getElementById('userType').textContent = '👥 PASSAGER';
-                switchTabPass('trajetsDisponibles');
+                document.getElementById('portalCond').style.display = 'none';
+                document.getElementById('portalPass').style.display = 'block';
             }
 
-            document.getElementById('userName').textContent = utilisateurActuel.nom + ' (' + utilisateurActuel.tel + ')';
-            
             ecouterDonnees();
         }
 
+        function ecouterDonnees() {
+            db.ref('trajets').on('value', snapshot => {
+                trajets = snapshot.val() || {};
+                rafraichir();
+            });
+
+            db.ref('reservations').on('value', snapshot => {
+                reservations = snapshot.val() || {};
+                rafraichir();
+            });
+        }
+
+        function rafraichir() {
+            if (user.type === 'conducteur') {
+                afficherMesTrajets();
+                afficherMesClients();
+            } else {
+                afficherTrajets();
+                afficherMesResa();
+            }
+        }
+
         function deconnexion() {
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
-                auth.signOut().then(() => {
-                    utilisateurActuel = null;
-                    localStorage.removeItem('utilisateurActuel');
-                    
-                    document.getElementById('loginScreen').classList.remove('hidden');
-                    document.getElementById('appContainer').style.display = 'none';
-                    
-                    document.getElementById('formConducteur').reset();
-                    document.getElementById('formPassager').reset();
-                    switchLoginTab('conducteur');
+            if (confirm('Déconnexion?')) {
+                user = null;
+                auth.signOut();
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('appScreen').classList.remove('active');
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+        }
+
+        function ajouterTrajet(e) {
+            e.preventDefault();
+            const id = db.ref('trajets').push().key;
+            db.ref('trajets/' + id).set({
+                id,
+                conducteur: user.nom,
+                tel: user.tel,
+                lieu: document.getElementById('lieu').value,
+                sieges: parseInt(document.getElementById('sieges').value),
+                siegesDisponibles: parseInt(document.getElementById('sieges').value),
+                date: document.getElementById('date').value,
+                heure: document.getElementById('heure').value,
+                notes: document.getElementById('notes').value
+            }).then(() => {
+                alert('✅ Trajet ajouté!');
+                e.target.reset();
+                switchTab('mesTrajets');
+            });
+        }
+
+        function afficherMesTrajets() {
+            const miens = Object.values(trajets).filter(t => t.conducteur === user.nom);
+            const html = miens.length === 0 ? 
+                '<div class="empty-state">Aucun trajet</div>' :
+                '<div class="card-grid">' + miens.map(t => `
+                    <div class="card">
+                        <h3>${t.lieu}</h3>
+                        <div class="card-info"><strong>Date:</strong> ${t.date}</div>
+                        <div class="card-info"><strong>Heure:</strong> ${t.heure}</div>
+                        <div class="card-info"><strong>Places:</strong> ${t.siegesDisponibles}/${t.sieges}</div>
+                        <button class="btn-danger" onclick="supprimerTrajet('${t.id}')">Supprimer</button>
+                    </div>
+                `).join('') + '</div>';
+            document.getElementById('mesTrajetsContainer').innerHTML = html;
+        }
+
+        function afficherMesClients() {
+            const miens = Object.values(trajets).filter(t => t.conducteur === user.nom);
+            const mesReservations = Object.values(reservations).filter(r => miens.some(t => t.id === r.trajetId));
+            const html = mesReservations.length === 0 ?
+                '<div class="empty-state">Aucune réservation</div>' :
+                mesReservations.map(r => `
+                    <div class="card">
+                        <h3>${r.nomPassager}</h3>
+                        <div class="card-info"><strong>Personnes:</strong> ${r.personnes}</div>
+                        <div class="card-info"><strong>Tél:</strong> ${r.tel}</div>
+                    </div>
+                `).join('');
+            document.getElementById('mesClientsContainer').innerHTML = html;
+        }
+
+        function afficherTrajets() {
+            const dispo = Object.values(trajets).filter(t => t.siegesDisponibles > 0);
+            const html = dispo.length === 0 ?
+                '<div class="empty-state">Aucun trajet disponible</div>' :
+                '<div class="card-grid">' + dispo.map(t => `
+                    <div class="card">
+                        <h3>${t.lieu}</h3>
+                        <div class="card-info"><strong>Conducteur:</strong> ${t.conducteur}</div>
+                        <div class="card-info"><strong>Date:</strong> ${t.date}</div>
+                        <div class="card-info"><strong>Heure:</strong> ${t.heure}</div>
+                        <div class="card-info"><strong>Places:</strong> ${t.siegesDisponibles}</div>
+                        <div class="card-info"><strong>Tel:</strong> ${t.tel}</div>
+                        <button class="btn-secondary" onclick="ouvrirResa('${t.id}')">Réserver</button>
+                    </div>
+                `).join('') + '</div>';
+            document.getElementById('trajetsContainer').innerHTML = html;
+        }
+
+        function afficherMesResa() {
+            const mesReservations = Object.values(reservations).filter(r => r.passager === user.nom);
+            const html = mesReservations.length === 0 ?
+                '<div class="empty-state">Aucune réservation</div>' :
+                mesReservations.map(r => {
+                    const trajet = trajets[r.trajetId];
+                    return `
+                        <div class="card">
+                            <h3>${trajet.lieu}</h3>
+                            <div class="card-info"><strong>Conducteur:</strong> ${trajet.conducteur}</div>
+                            <div class="card-info"><strong>Date:</strong> ${trajet.date}</div>
+                            <div class="card-info"><strong>Personnes:</strong> ${r.personnes}</div>
+                            <button class="btn-danger" onclick="annulerResa('${r.id}')">Annuler</button>
+                        </div>
+                    `;
+                }).join('');
+            document.getElementById('resaContainer').innerHTML = html;
+        }
+
+        function ouvrirResa(trajetId) {
+            const personnes = prompt('Combien de personnes?', '1');
+            if (!personnes) return;
+            
+            const trajet = trajets[trajetId];
+            if (parseInt(personnes) > trajet.siegesDisponibles) {
+                alert('❌ Pas assez de places!');
+                return;
+            }
+
+            const resaId = db.ref('reservations').push().key;
+            const nouvellePlace = trajet.siegesDisponibles - parseInt(personnes);
+
+            db.ref('reservations/' + resaId).set({
+                id: resaId,
+                trajetId,
+                nomPassager: user.nom,
+                passager: user.nom,
+                tel: user.tel,
+                personnes: parseInt(personnes)
+            });
+
+            db.ref('trajets/' + trajetId + '/siegesDisponibles').set(nouvellePlace);
+            
+            alert('✅ Réservation confirmée!');
+        }
+
+        function supprimerTrajet(id) {
+            if (confirm('Supprimer?')) {
+                db.ref('trajets/' + id).remove();
+                Object.keys(reservations).forEach(resId => {
+                    if (reservations[resId].trajetId === id) {
+                        db.ref('reservations/' + resId).remove();
+                    }
                 });
             }
         }
 
-        // ==================== ÉCOUTER LES DONNÉES FIREBASE ====================
-        function ecouterDonnees() {
-            // Écouter les trajets
-            db.ref('trajets').on('value', snapshot => {
-                trajets = snapshot.val() || {};
-                nettoyerTrajetsExpires();
-                rafraichirAffichage();
-            });
-
-            // Écouter les réservations
-            db.ref('reservations').on('value', snapshot => {
-                reservations = snapshot.val() || {};
-                rafraichirAffichage();
-            });
-        }
-
-        // ==================== TABS CONDUCTEUR ====================
-        function switchTabCond(tab) {
-            document.querySelectorAll('#portalConducteur .content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('#portalConducteur .tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-            document.querySelector(`#portalConducteur [onclick="switchTabCond('${tab}')"]`).classList.add('active');
-            
-            if (tab === 'mesTrajets') afficherMesTrajets();
-            if (tab === 'mesClients') afficherMesClients();
-        }
-
-        // ==================== TABS PASSAGER ====================
-        function switchTabPass(tab) {
-            document.querySelectorAll('#portalPassager .content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('#portalPassager .tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-            document.querySelector(`#portalPassager [onclick="switchTabPass('${tab}')"]`).classList.add('active');
-            
-            if (tab === 'trajetsDisponibles') afficherTrajetsDisponibles();
-            if (tab === 'mesReservations') afficherMesReservations();
-        }
-
-        // ==================== CONDUCTEUR - AJOUTER TRAJET ====================
-        function ajouterTrajet(e) {
-            e.preventDefault();
-
-            const trajetId = db.ref('trajets').push().key;
-            const trajet = {
-                id: trajetId,
-                nomConducteur: utilisateurActuel.nom,
-                telConducteur: utilisateurActuel.tel,
-                uidConducteur: utilisateurActuel.uid,
-                lieuDepart: document.getElementById('lieuDepart').value,
-                dateDepart: document.getElementById('dateDepart').value,
-                heureDepart: document.getElementById('heureDepart').value,
-                sieges: parseInt(document.getElementById('sieges').value),
-                siegesDisponibles: parseInt(document.getElementById('sieges').value),
-                notes: document.getElementById('notesCond').value,
-                dateCreation: new Date().toLocaleDateString('fr-FR')
-            };
-
-            db.ref('trajets/' + trajetId).set(trajet).then(() => {
-                afficherMessage('success', '✅ Trajet ajouté avec succès!');
-                e.target.reset();
-                afficherMesTrajets();
-                mettreAJourStats();
-            }).catch(error => {
-                afficherMessage('error', '❌ Erreur: ' + error.message);
-            });
-        }
-
-        // ==================== CONDUCTEUR - AFFICHER MES TRAJETS ====================
-        function afficherMesTrajets() {
-            const container = document.getElementById('mesTrajetsContainer');
-            
-            const mesTrajets = Object.values(trajets).filter(t => t.uidConducteur === utilisateurActuel.uid);
-
-            if (mesTrajets.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🚗</div>
-                        <p>Vous n'avez pas encore ajouté de trajet</p>
-                    </div>
-                `;
-                return;
+        function annulerResa(id) {
+            if (confirm('Annuler?')) {
+                const resa = reservations[id];
+                const trajet = trajets[resa.trajetId];
+                db.ref('trajets/' + resa.trajetId + '/siegesDisponibles').set(trajet.siegesDisponibles + resa.personnes);
+                db.ref('reservations/' + id).remove();
             }
-
-            let html = '<div class="card-grid">';
-            
-            mesTrajets.forEach(trajet => {
-                const nbReservations = Object.values(reservations).filter(r => r.trajetId === trajet.id && r.statut === 'confirmée').length;
-                const siegeTexte = trajet.siegesDisponibles > 0 ? 
-                    `<span class="badge badge-available">✅ ${trajet.siegesDisponibles} place(s) libre(s)</span>` :
-                    `<span class="badge badge-full">❌ Complet</span>`;
-
-                html += `
-                    <div class="card">
-                        <div class="card-title">${trajet.lieuDepart}</div>
-                        <div class="card-subtitle">Mon trajet</div>
-                        <div class="card-info">
-                            <span class="label">📅 Date:</span>
-                            <strong>${trajet.dateDepart}</strong>
-                        </div>
-                        <div class="card-info">
-                            <span class="label">⏰ Heure:</span>
-                            <strong>${trajet.heureDepart}</strong>
-                        </div>
-                        <div class="card-info">
-                            <span class="label">🪑 Places:</span>
-                            <strong class="seat-count">${trajet.siegesDisponibles}/${trajet.sieges}</strong>
-                        </div>
-                        <div class="card-info">
-                            <span class="label">👥 Réservations:</span>
-                            <strong>${nbReservations}</strong>
-                        </div>
-                        ${trajet.notes ? `<div class="card-info"><span class="label">📝 Notes:</span> <strong>${trajet.notes}</strong></div>` : ''}
-                        ${siegeTexte}
-                        <div class="card-actions">
-                            <button class="btn-danger" onclick="supprimerTrajet('${trajet.id}')">Supprimer</button>
-                        </div>
-                    </div>
-                `;
-            });
-
-            html += '</div>';
-            container.innerHTML = html;
         }
-
-        // ==================== CONDUCTEUR - AFFICHER MES CLIENTS ====================
-        function afficherMesClients() {
-            const container = document.getElementById('mesClientsContainer');
-            
-            const mesTrajets = Object.values(trajets).filter(t => t.uidConducteur === utilisateurActuel.uid);
-            const mesReservations = Object.values(reservations).filter(r => {
-                return mesTrajets.some(t => t.id === r.trajetId) && r.statut === 'confirmée';
-            });
-
-            if (mesReservations.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📬</div>
-                        <p>Aucune réservation pour vos trajets</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '<div class="highlight-section"><h3>👥 Mes clients</h3>';
-            
-            mesTrajets.forEach(trajet => {
-                const resvTrajet = mesReservations.filter(r => r.trajetId === trajet.id);
-                
-                if (resvTrajet.length > 0) {
-                    html += `<div style="margin-bottom: 25px; border-bottom: 1px solid #ddd; padding-bottom: 15px;">
-                        <strong style="color: var(--primary); font-size: 1.1em;">📍 ${trajet.lieuDepart}</strong><br>
-                        <span style="font-size: 0.9em; color: var(--text-muted);">📅 ${trajet.dateDepart} à ${trajet.heureDepart}</span>
-                        <div style="margin-top: 10px;">`;
-                    
-                    resvTrajet.forEach(resv => {
-                        html += `
-                            <div class="reservation-card">
-                                <div><strong>${resv.nomPassager}</strong></div>
-                                <div>👥 ${resv.nbPersonnes} personne(s)</div>
-                                <div>📞 ${resv.telPassager}</div>
-                                ${resv.notes ? `<div>📝 ${resv.notes}</div>` : ''}
-                                <div style="margin-top: 8px;">
-                                    <span class="badge badge-confirmed">✅ Confirmée</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    
-                    html += '</div></div>';
-                }
-            });
-
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        // ==================== PASSAGER - AFFICHER TRAJETS DISPONIBLES ====================
-        function afficherTrajetsDisponibles() {
-            const container = document.getElementById('trajetsDisponiblesContainer');
-            
-            const trajetsDisponibles = Object.values(trajets).filter(t => t.siegesDisponibles > 0);
-
-            if (trajetsDisponibles.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🔍</div>
-                        <p>Aucun trajet disponible pour le moment</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '<div class="card-grid">';
-            
-            trajetsDisponibles.forEach(trajet => {
-                html += `
-                    <div class="card">
-                        <div class="card-title">${trajet.lieuDepart}</div>
-                        <div class="card-subtitle">Trajet disponible</div>
-                        <div class="card-info">
-                            <span class="label">👤 Conducteur:</span>
-                            <strong>${trajet.nomConducteur}</strong>
-                        </div>
-                        <div class="card-info">
-                            <span class="label">📅 Date:</span>
-                            <strong>${trajet.dateDepart}</strong>
-                        </div>
-                        <div class="card-info">
-                            <span class="label">⏰ Heure:</span>
-                            <strong>${trajet.heureDepart}</strong>
-                        </div>
-                        <div class="card-info">
-                            <span class="label">🪑 Places libres:</span>
-                            <strong class="seat-count">${trajet.siegesDisponibles}</strong>
-                        </div>
-                        <div class="card-info">
-                            <span class="label">📞 Contact:</span>
-                            <strong>${trajet.telConducteur}</strong>
-                        </div>
-                        ${trajet.notes ? `<div class="card-info"><span class="label">📝 Notes:</span> <strong>${trajet.notes}</strong></div>` : ''}
-                        <span class="badge badge-available">✅ Disponible</span>
-                        <div class="card-actions">
-                            <button class="btn-secondary" onclick="ouvrirModalReservation('${trajet.id}')">Réserver</button>
-                        </div>
-                    </div>
-                `;
-            });
-
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        // ==================== PASSAGER - MES RÉSERVATIONS ====================
-        function afficherMesReservations() {
-            const container = document.getElementById('mesReservationsContainer');
-            
-            const mesRes = Object.values(reservations).filter(r => r.uidPassager === utilisateurActuel.uid);
-
-            if (mesRes.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🎟️</div>
-                        <p>Vous n'avez pas encore de réservation</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '<div class="highlight-section"><h3>✅ Mes réservations</h3>';
-            
-            mesRes.forEach(resv => {
-                const trajet = trajets[resv.trajetId];
-                if (trajet) {
-                    html += `
-                        <div class="reservation-card">
-                            <div><strong style="font-size: 1.1em;">📍 ${trajet.lieuDepart}</strong></div>
-                            <div>📅 ${trajet.dateDepart} à ${trajet.heureDepart}</div>
-                            <div>👤 Conducteur: <strong>${trajet.nomConducteur}</strong></div>
-                            <div>📞 ${trajet.telConducteur}</div>
-                            <div>👥 Réservé pour: <strong>${resv.nbPersonnes} personne(s)</strong></div>
-                            ${resv.notes ? `<div>📝 ${resv.notes}</div>` : ''}
-                            <div style="margin-top: 10px;">
-                                <span class="badge badge-confirmed">✅ Confirmée</span>
-                            </div>
-                            <div class="card-actions" style="margin-top: 10px;">
-                                <button class="btn-danger" onclick="annulerReservation('${resv.id}')">Annuler</button>
-                            </div>
-                        </div>
-                    `;
-                }
-            });
-
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        // ==================== MODAL RÉSERVATION ====================
-        function ouvrirModalReservation(trajetId) {
-            modalTrajetId = trajetId;
-            document.getElementById('modalReservation').classList.add('active');
-        }
-
-        function fermerModal() {
-            document.getElementById('modalReservation').classList.remove('active');
-            modalTrajetId = null;
-        }
-
-        function confirmerReservation(e) {
-            e.preventDefault();
-
-            const trajet = trajets[modalTrajetId];
-            if (!trajet) return;
-
-            const nbPersonnes = parseInt(document.getElementById('nbPersonnesModal').value);
-
-            if (nbPersonnes > trajet.siegesDisponibles) {
-                afficherMessage('error', `❌ Pas assez de places! ${trajet.siegesDisponibles} disponible(s).`);
-                return;
-            }
-
-            const reservationId = db.ref('reservations').push().key;
-            const reservation = {
-                id: reservationId,
-                trajetId: modalTrajetId,
-                nomPassager: utilisateurActuel.nom,
-                telPassager: utilisateurActuel.tel,
-                uidPassager: utilisateurActuel.uid,
-                nbPersonnes: nbPersonnes,
-                notes: document.getElementById('notesPassModal').value,
-                statut: 'confirmée',
-                dateReservation: new Date().toLocaleDateString('fr-FR')
-            };
-
-            // Sauvegarder la réservation
-            db.ref('reservations/' + reservationId).set(reservation);
-
-            // Mettre à jour les places disponibles
-            trajet.siegesDisponibles -= nbPersonnes;
-            db.ref('trajets/' + modalTrajetId + '/siegesDisponibles').set(trajet.siegesDisponibles);
-
-            afficherMessage('success', `✅ Réservation confirmée pour ${nbPersonnes} personne(s)!`);
-            fermerModal();
-            document.querySelector('#modalReservation form').reset();
-            
-            afficherTrajetsDisponibles();
-            afficherMesReservations();
-            mettreAJourStats();
-        }
-
-        // ==================== SUPPRIMER ====================
-        function supprimerTrajet(trajetId) {
-            if (!confirm('Êtes-vous sûr? Cela supprimera aussi toutes les réservations liées.')) return;
-
-            db.ref('trajets/' + trajetId).remove();
-            
-            // Supprimer aussi les réservations liées
-            Object.keys(reservations).forEach(resId => {
-                if (reservations[resId].trajetId === trajetId) {
-                    db.ref('reservations/' + resId).remove();
-                }
-            });
-
-            afficherMessage('success', '✅ Trajet supprimé');
-            afficherMesTrajets();
-            mettreAJourStats();
-        }
-
-        function annulerReservation(reservationId) {
-            if (!confirm('Êtes-vous sûr de vouloir annuler cette réservation?')) return;
-
-            const reservation = reservations[reservationId];
-            const trajet = trajets[reservation.trajetId];
-
-            if (trajet) {
-                trajet.siegesDisponibles += reservation.nbPersonnes;
-                db.ref('trajets/' + reservation.trajetId + '/siegesDisponibles').set(trajet.siegesDisponibles);
-            }
-
-            db.ref('reservations/' + reservationId).remove();
-
-            afficherMessage('success', '✅ Réservation annulée');
-            afficherMesReservations();
-            afficherTrajetsDisponibles();
-            mettreAJourStats();
-        }
-
-        // ==================== NETTOYAGE TRAJETS EXPIRÉS ====================
-        function nettoyerTrajetsExpires() {
-            const aujourd_hui = new Date();
-            aujourd_hui.setHours(0, 0, 0, 0);
-
-            Object.keys(trajets).forEach(trajetId => {
-                const trajet = trajets[trajetId];
-                const dateTrajet = new Date(trajet.dateDepart);
-                
-                if (dateTrajet < aujourd_hui) {
-                    // Supprimer les réservations liées
-                    Object.keys(reservations).forEach(resId => {
-                        if (reservations[resId].trajetId === trajetId) {
-                            db.ref('reservations/' + resId).remove();
-                        }
-                    });
-                    
-                    // Supprimer le trajet
-                    db.ref('trajets/' + trajetId).remove();
-                }
-            });
-        }
-
-        // ==================== STATISTIQUES ====================
-        function mettreAJourStats() {
-            const statsContainer = document.getElementById('stats');
-            const reservationsConfirmees = Object.values(reservations).filter(r => r.statut === 'confirmée').length;
-            const totalPlaces = Object.values(trajets).reduce((sum, t) => sum + t.sieges, 0);
-            const placesLibres = Object.values(trajets).reduce((sum, t) => sum + t.siegesDisponibles, 0);
-            
-            statsContainer.innerHTML = `
-                <div class="stat-card">
-                    <div class="stat-number">${Object.keys(trajets).length}</div>
-                    <div class="stat-label">Trajets total</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${placesLibres}</div>
-                    <div class="stat-label">Places libres</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${reservationsConfirmees}</div>
-                    <div class="stat-label">Réservations</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${totalPlaces - placesLibres}</div>
-                    <div class="stat-label">Places réservées</div>
-                </div>
-            `;
-        }
-
-        function afficherMessage(type, message) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = type === 'success' ? 'success-message' : 'error-message';
-            msgDiv.textContent = message;
-            
-            const header = document.querySelector('.header');
-            header.parentNode.insertBefore(msgDiv, header.nextSibling);
-            
-            setTimeout(() => msgDiv.remove(), 5000);
-        }
-
-        function rafraichirAffichage() {
-            if (utilisateurActuel?.type === 'conducteur') {
-                afficherMesTrajets();
-                afficherMesClients();
-            } else {
-                afficherTrajetsDisponibles();
-                afficherMesReservations();
-            }
-            mettreAJourStats();
-        }
-
-        // ==================== INITIALISATION ====================
-        window.addEventListener('load', () => {
-            const util = localStorage.getItem('utilisateurActuel');
-            if (util) {
-                utilisateurActuel = JSON.parse(util);
-                afficherApp();
-            }
-        });
     </script>
 </body>
 </html>
